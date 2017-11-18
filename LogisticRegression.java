@@ -1,7 +1,3 @@
-package ML3;
-
-import sun.security.jca.GetInstance;
-
 import java.util.ArrayList;
 
 public class LogisticRegression {
@@ -9,8 +5,8 @@ public class LogisticRegression {
     private double alpha;
     private double[][] coefficients;
     private int epochs;
-    private ArrayList<GetInstance.Instance> trainInstances;
-    private ArrayList<GetInstance.Instance> testInstances;
+    private ArrayList<Instance> trainInstances;
+    private ArrayList<Instance> testInstances;
     private ArrayList<String> labels;
     private int numLabels;
 
@@ -19,10 +15,10 @@ public class LogisticRegression {
         this.alpha = rate; //SOR: learning rate
         this.epochs = iter; //SOR: number of iterations during training
 
-        trainInstances = csv.getTrainInstances; //SOR: instances for algorithm training
-        testInstances = csv.getTestInstances; //SOR: instances for algorithm testing
-        int numAttributes = csv.getNumAttributes; //SOR: number of attributes per instance
-        labels = csv.getLabels; //SOR: list of possible classifications
+        trainInstances = csv.getTrainInstances(); //SOR: instances for algorithm training
+        testInstances = csv.getTestInstances(); //SOR: instances for algorithm testing
+        int numAttributes = csv.getNumAttributes(); //SOR: number of attributes per instance
+        labels = csv.getLabels(); //SOR: list of possible classifications
         coefficients = new double[labels.size()][numAttributes];
     }
 
