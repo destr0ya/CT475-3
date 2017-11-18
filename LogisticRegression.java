@@ -1,3 +1,5 @@
+package ML3;
+
 import java.util.ArrayList;
 
 public class LogisticRegression {
@@ -15,10 +17,10 @@ public class LogisticRegression {
         this.alpha = rate; //SOR: learning rate
         this.epochs = iter; //SOR: number of iterations during training
 
-        trainInstances = csv.getTrainInstances(); //SOR: instances for algorithm training
-        testInstances = csv.getTestInstances(); //SOR: instances for algorithm testing
-        int numAttributes = csv.getNumAttributes(); //SOR: number of attributes per instance
-        labels = csv.getLabels(); //SOR: list of possible classifications
+        trainInstances = csv.getTrainInstances; //SOR: instances for algorithm training
+        testInstances = csv.getTestInstances; //SOR: instances for algorithm testing
+        int numAttributes = csv.getNumAttributes; //SOR: number of attributes per instance
+        labels = csv.getLabels; //SOR: list of possible classifications
         coefficients = new double[labels.size()][numAttributes];
     }
 
@@ -41,10 +43,21 @@ public class LogisticRegression {
     //SOR: train algorithm
     public void train(){
 
+        double binaryLabel;
+
         //SOR: iterate number of times specified for each instance and each label
+        //run independent binary regressions
         for(int iteration = 0; iteration <= epochs; iteration++){
             for(Instance inst : testInstances){
                 for(int lbl = 0; lbl < labels.size(); lbl++){
+                    //SOR: assign binary value to label, either is label or is not label
+                    if (labels.get(lbl) == inst.getLabel()){
+                        binaryLabel = 1.0; //SOR: if label of instance is label under test, label is 1
+                    }
+                    else{
+                        binaryLabel = 0.0; //SOR: if label of instance is not label under test, label is 0
+                    }
+                    //SOR: run classification
                     double yhat = classify(coefficients[lbl], inst);
                 }
             }
