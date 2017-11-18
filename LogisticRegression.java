@@ -1,7 +1,5 @@
 package ML3;
 
-import sun.security.jca.GetInstance;
-
 import java.util.ArrayList;
 
 public class LogisticRegression {
@@ -9,8 +7,8 @@ public class LogisticRegression {
     private double alpha;
     private double[][] coefficients;
     private int epochs;
-    private ArrayList<GetInstance.Instance> trainInstances;
-    private ArrayList<GetInstance.Instance> testInstances;
+    private ArrayList<Instance> trainInstances;
+    private ArrayList<Instance> testInstances;
     private ArrayList<String> labels;
     private int numLabels;
 
@@ -45,10 +43,21 @@ public class LogisticRegression {
     //SOR: train algorithm
     public void train(){
 
+        double binaryLabel;
+
         //SOR: iterate number of times specified for each instance and each label
+        //run independent binary regressions
         for(int iteration = 0; iteration <= epochs; iteration++){
             for(Instance inst : testInstances){
                 for(int lbl = 0; lbl < labels.size(); lbl++){
+                    //SOR: assign binary value to label, either is label or is not label
+                    if (labels.get(lbl) == inst.getLabel()){
+                        binaryLabel = 1.0; //SOR: if label of instance is label under test, label is 1
+                    }
+                    else{
+                        binaryLabel = 0.0; //SOR: if label of instance is not label under test, label is 0
+                    }
+                    //SOR: run classification
                     double yhat = classify(coefficients[lbl], inst);
                 }
             }
