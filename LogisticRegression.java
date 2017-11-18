@@ -1,5 +1,7 @@
 package ML3;
 
+import sun.security.jca.GetInstance;
+
 import java.util.ArrayList;
 
 public class LogisticRegression {
@@ -7,8 +9,8 @@ public class LogisticRegression {
     private double alpha;
     private double[][] coefficients;
     private int epochs;
-    private ArrayList<Instance> trainInstances;
-    private ArrayList<Instance> testInstances;
+    private ArrayList<GetInstance.Instance> trainInstances;
+    private ArrayList<GetInstance.Instance> testInstances;
     private ArrayList<String> labels;
     private int numLabels;
 

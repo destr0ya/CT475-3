@@ -19,5 +19,14 @@ public class Instance {
         return label;
     }
 
-
+    //EM
+    public String toString() {
+        String returnString = "";
+        for (int i = 0; i < attributes.length; i++) {
+            returnString += attributes[i];
+            returnString += " ";
+        }
+        returnString += label;
+        return returnString;
+    }
 }
