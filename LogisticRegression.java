@@ -19,8 +19,9 @@ public class LogisticRegression {
 
         trainInstances = csv.getTrainInstances; //SOR: instances for algorithm training
         testInstances = csv.getTestInstances; //SOR: instances for algorithm testing
-        labels = csv.getLabels; //SOR: number of possible classifications
-        coefficients = new double[labels.size()][trainInstances.size()];
+        int numAttributes = csv.getNumAttributes; //SOR: number of attributes per instance
+        labels = csv.getLabels; //SOR: list of possible classifications
+        coefficients = new double[labels.size()][numAttributes];
     }
 
     //SOR: Method to implement sigmoid function
@@ -29,11 +30,26 @@ public class LogisticRegression {
         return logit;
     }
 
+    //SOR: Method to predict label
+    private double classify(double[] coeffs, Instance ins){
+        double logit = 0.0;
+        double[] attribs = ins.getAttributes();
+        for(int i = 0; i < attribs.length; i++){
+            logit += coeffs[i] * attribs[i];
+        }
+        return sigmoid(logit);
+    }
+
     //SOR: train algorithm
     public void train(){
 
+        //SOR: iterate number of times specified for each instance and each label
         for(int iteration = 0; iteration <= epochs; iteration++){
-            for()
+            for(Instance inst : testInstances){
+                for(int lbl = 0; lbl < labels.size(); lbl++){
+                    double yhat = classify(coefficients[lbl], inst);
+                }
+            }
         }
 
     }
