@@ -1,14 +1,11 @@
-package ML3;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 public class GUI extends JFrame {
 
+    //SOR: variables to store text box contents
     String fileInStr;
     int numTestsInt;
     int iterInt;
@@ -33,6 +30,10 @@ public class GUI extends JFrame {
         layout = new GridBagLayout();
         container.setLayout(layout);
         constraints = new GridBagConstraints();
+        //SOR: altered constraints so components fill space
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.weightx = 1.0;
+        constraints.weighty = 1.0;
 
         fileInLabel = new JLabel("CSV File Location: ");
         numTestsLabel = new JLabel("Number of Tests: ");
@@ -95,7 +96,7 @@ public class GUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            //SOR
+            //SOR: implemented error checking, wrote text box contents to variables
             checkInput();
             fileInStr = fileIn.getText();
             fileOutStr = fileOut.getText();
@@ -115,12 +116,13 @@ public class GUI extends JFrame {
         try{
             numTestsInt = Integer.parseInt(numTests.getText());
         } catch(Exception e){
-            //inputOk = false;
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null,"Invalid input: Number of tests must be an integer.");
         }
         try{
             iterInt = Integer.parseInt(iterations.getText());
         } catch(Exception e){
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null,"Invalid input: Number of iterations must be an integer.");
         }
         try{
@@ -129,6 +131,7 @@ public class GUI extends JFrame {
                 throw new Exception();
             }
         } catch(Exception e){
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null,"Invalid input: Number of iterations must be a double less than 1.");
         }
         try{
@@ -137,6 +140,7 @@ public class GUI extends JFrame {
                 throw new Exception();
             }
         } catch(Exception e){
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null,"Invalid input: Percentage split must be a double less than 1.");
         }
     }
