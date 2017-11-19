@@ -1,9 +1,20 @@
+package ML3;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class GUI extends JFrame {
+
+    String fileInStr;
+    int numTestsInt;
+    int iterInt;
+    double lrDouble;
+    double splitDouble;
+    String fileOutStr;
 
     private Container container;
     private JPanel panel;
@@ -83,11 +94,50 @@ public class GUI extends JFrame {
     private class ButtonHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            CSVReader csvReader = new CSVReader(Double.parseDouble(percentageSplit.getText()), fileIn.getText());
-            LogisticRegression lr = new LogisticRegression(Double.parseDouble(learningRate.getText()), Integer.parseInt(iterations.getText()), csvReader, fileOut.getText());
+
+            //SOR
+            checkInput();
+            fileInStr = fileIn.getText();
+            fileOutStr = fileOut.getText();
+
+            //EM
+            CSVReader csvReader = new CSVReader(splitDouble, fileInStr);
+            LogisticRegression lr = new LogisticRegression(lrDouble, iterInt, csvReader, fileOutStr);
 
             lr.train();
             lr.test();
+        }
+    }
+
+    //SOR: Error handling for GUI inputs
+    private void checkInput() {
+
+        try{
+            numTestsInt = Integer.parseInt(numTests.getText());
+        } catch(Exception e){
+            //inputOk = false;
+            JOptionPane.showMessageDialog(null,"Invalid input: Number of tests must be an integer.");
+        }
+        try{
+            iterInt = Integer.parseInt(iterations.getText());
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Invalid input: Number of iterations must be an integer.");
+        }
+        try{
+            lrDouble = Double.parseDouble(learningRate.getText());
+            if (lrDouble > 1){
+                throw new Exception();
+            }
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Invalid input: Number of iterations must be a double less than 1.");
+        }
+        try{
+            splitDouble = Double.parseDouble(percentageSplit.getText());
+            if (lrDouble > 1){
+                throw new Exception();
+            }
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Invalid input: Percentage split must be a double less than 1.");
         }
     }
 }
