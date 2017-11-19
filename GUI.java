@@ -30,7 +30,7 @@ public class GUI extends JFrame {
         percentageSplitLabel = new JLabel("Percentage of data for test: ");
         fileOutLabel = new JLabel("Results File Location: ");
 
-        fileIn = new JTextArea("Eg. /Users/Emma/Documents/Uni/Final Year/Machine Learning & Data Mining/Assignments/Assignment 3/owls15.csv");
+        fileIn = new JTextArea("/Users/Emma/Documents/Uni/Final Year/Machine Learning & Data Mining/Assignments/Assignment 3/owls15.csv");
         numTests = new JTextArea("100");
         iterations = new JTextArea("1000");
         learningRate = new JTextArea("0.01");
