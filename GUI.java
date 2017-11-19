@@ -1,7 +1,12 @@
 import javax.swing.*;
+import javax.xml.transform.Result;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 public class GUI extends JFrame {
 
@@ -39,14 +44,14 @@ public class GUI extends JFrame {
         numTestsLabel = new JLabel("Number of Tests: ");
         iterationsLabel = new JLabel("Number of Iterations: ");
         learningRateLabel = new JLabel("Learning Rate: ");
-        percentageSplitLabel = new JLabel("Percentage of data for test: ");
+        percentageSplitLabel = new JLabel("Percentage of data for training: ");
         fileOutLabel = new JLabel("Results File Location: ");
 
         fileIn = new JTextArea("/Users/Emma/Documents/Uni/Final Year/Machine Learning & Data Mining/Assignments/Assignment 3/owls15.csv");
-        numTests = new JTextArea("100");
-        iterations = new JTextArea("1000");
+        numTests = new JTextArea("10");
+        iterations = new JTextArea("100000");
         learningRate = new JTextArea("0.01");
-        percentageSplit = new JTextArea("0.5");
+        percentageSplit = new JTextArea("0.66");
         fileOut = new JTextArea("/Users/Emma/Documents/Uni/Final Year/Machine Learning & Data Mining/Assignments/Assignment 3/owls.txt");
 
         JButton start = new JButton("Go!");
@@ -100,13 +105,13 @@ public class GUI extends JFrame {
             checkInput();
             fileInStr = fileIn.getText();
             fileOutStr = fileOut.getText();
-
-            //EM
-            CSVReader csvReader = new CSVReader(splitDouble, fileInStr);
-            LogisticRegression lr = new LogisticRegression(lrDouble, iterInt, csvReader, fileOutStr);
-
-            lr.train();
-            lr.test();
+            try {
+                doLogisticRegression();
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (UnsupportedEncodingException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 
@@ -143,5 +148,24 @@ public class GUI extends JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null,"Invalid input: Percentage split must be a double less than 1.");
         }
+    }
+
+    private void doLogisticRegression() throws FileNotFoundException, UnsupportedEncodingException {
+        PrintWriter writer = new PrintWriter(fileOutStr, "UTF-8");
+        double accuracy = 0.0;
+        ArrayList<Results> resultsList = new ArrayList<>();
+        for (int i = 0; i < numTestsInt; i++) {
+            CSVReader csvReader = new CSVReader(splitDouble, fileInStr);
+            LogisticRegression lr = new LogisticRegression(lrDouble, iterInt, csvReader, fileOutStr);
+
+            lr.train();
+            resultsList.add(lr.test());
+            accuracy += lr.test().getAccuracy();
+        }
+        for (Results res : resultsList) {
+            writer.println(res);
+        }
+        Double overallAccuracy = accuracy/numTestsInt;
+        writer.println("\nOverall accuracy for " + numTestsInt + " tests: " + overallAccuracy);
     }
 }

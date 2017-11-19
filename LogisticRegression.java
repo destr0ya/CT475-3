@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class LogisticRegression {
@@ -86,13 +89,11 @@ public class LogisticRegression {
                     }
                 }
             }
-
         }
-
     }
 
-    public void test(){
-
+    public Results test() {
+        String results = "";
         double accuracy = 0.0;
         for (Instance inst : testInstances) {
 
@@ -105,20 +106,20 @@ public class LogisticRegression {
                 //SOR: run classification for current label
                 yhat = classify(coefficients[lbl], inst);
 
-                if (yhat > max){
+                if (yhat > max) {
                     max = yhat;
                     predLabel = labels.get(lbl);
                 }
             }
 
-            System.out.println(inst.toString() + "\t\tPredicted label: " + predLabel);
-            if (inst.getLabel().equals(predLabel)){
+            results += (inst.toString() + "\t\tPredicated Label: " + predLabel + "\r\n");
+            if (inst.getLabel().equals(predLabel)) {
                 accuracy++;
             }
 
         }
-
-        accuracy = (accuracy/testInstances.size())*100;
-        System.out.println("Overall accuracy = " + accuracy + "%");
+        accuracy = (accuracy / testInstances.size()) * 100;
+        results += ("Overall accuracy = " + accuracy + "%" + "\r\n\n");
+        return new Results(results, accuracy);
     }
 }
