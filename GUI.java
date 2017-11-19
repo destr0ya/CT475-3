@@ -34,7 +34,7 @@ public class GUI extends JFrame {
         numTests = new JTextArea("100");
         iterations = new JTextArea("1000");
         learningRate = new JTextArea("0.01");
-        percentageSplit = new JTextArea("50");
+        percentageSplit = new JTextArea("0.5");
         fileOut = new JTextArea("/Users/Emma/Documents/Uni/Final Year/Machine Learning & Data Mining/Assignments/Assignment 3/owls.txt");
 
         JButton start = new JButton("Go!");
@@ -85,6 +85,9 @@ public class GUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             CSVReader csvReader = new CSVReader(Double.parseDouble(percentageSplit.getText()), fileIn.getText());
             LogisticRegression lr = new LogisticRegression(Double.parseDouble(learningRate.getText()), Integer.parseInt(iterations.getText()), csvReader, fileOut.getText());
+
+            lr.train();
+            lr.test();
         }
     }
 }

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class LogisticRegression {
 
@@ -119,7 +118,7 @@ public class LogisticRegression {
 
         }
 
-        accuracy = accuracy/testInstances.size();
+        accuracy = (accuracy/testInstances.size())*100;
         System.out.println("Overall accuracy = " + accuracy + "%");
     }
 }
