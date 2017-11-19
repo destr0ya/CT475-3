@@ -1,5 +1,3 @@
-package ML3;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -20,10 +18,10 @@ public class LogisticRegression {
         this.epochs = iter; //SOR: number of iterations during training
         this.fileOut = output; //SOR: string specifying file output location
 
-        trainInstances = csv.getTrainInstances; //SOR: instances for algorithm training
-        testInstances = csv.getTestInstances; //SOR: instances for algorithm testing
-        numAttributes = csv.getNumAttributes; //SOR: number of attributes per instance
-        labels = csv.getLabels; //SOR: list of possible classifications
+        trainInstances = csv.getTrainInstances(); //SOR: instances for algorithm training
+        testInstances = csv.getTestInstances(); //SOR: instances for algorithm testing
+        numAttributes = csv.getNumAttributes(); //SOR: number of attributes per instance
+        labels = csv.getLabels(); //SOR: list of possible classifications
         coefficients = new double[labels.size()][numAttributes];
     }
 
