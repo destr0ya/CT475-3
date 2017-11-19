@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.xml.transform.Result;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,19 +17,18 @@ public class GUI extends JFrame {
     double splitDouble;
     String fileOutStr;
 
+    //EM: Various components needed for GUI
     private Container container;
-    private JPanel panel;
     private GridBagLayout layout;
     private JLabel fileInLabel, numTestsLabel, iterationsLabel, learningRateLabel, percentageSplitLabel, fileOutLabel;
     private JTextArea fileIn, numTests,  iterations, learningRate, percentageSplit, fileOut;
-    private JButton startML;
     private GridBagConstraints constraints;
 
     public GUI() {
 
         super("Logistic Regression Test GUI");
 
-        //EM: actually getting it to work
+        //EM: Initialising layout
         container = getContentPane();
         layout = new GridBagLayout();
         container.setLayout(layout);
@@ -40,6 +38,7 @@ public class GUI extends JFrame {
         constraints.weightx = 1.0;
         constraints.weighty = 1.0;
 
+        //EM: Initialisation of labels and text boxes.
         fileInLabel = new JLabel("CSV File Location: ");
         numTestsLabel = new JLabel("Number of Tests: ");
         iterationsLabel = new JLabel("Number of Iterations: ");
@@ -47,6 +46,7 @@ public class GUI extends JFrame {
         percentageSplitLabel = new JLabel("Percentage of data for training: ");
         fileOutLabel = new JLabel("Results File Location: ");
 
+        //EM: Default values for items, which can all be amended by the user within the constraints (see error handling below)
         fileIn = new JTextArea("/Users/Emma/Documents/Uni/Final Year/Machine Learning & Data Mining/Assignments/Assignment 3/owls15.csv");
         numTests = new JTextArea("10");
         iterations = new JTextArea("100000");
@@ -56,6 +56,7 @@ public class GUI extends JFrame {
 
         JButton start = new JButton("Go!");
 
+        //EM: Adding the components to the JFrame
         addComponent(fileInLabel, 1, 1, 2, 2);
         addComponent(numTestsLabel, 3, 1, 2, 2);
         addComponent(iterationsLabel, 5, 1, 2, 2);
@@ -71,6 +72,8 @@ public class GUI extends JFrame {
         addComponent(fileOut, 11, 4, 10, 2);
 
         addComponent(start, 14, 4, 1, 1);
+
+        //Visualises the GUI and implements a handler for the button.
         ButtonHandler handler = new ButtonHandler();
         start.addActionListener(handler);
 
@@ -79,9 +82,8 @@ public class GUI extends JFrame {
 
     }
 
-    private void addComponent(Component component, int row,
-                              int column, int width, int height)
-    {
+    //EM: Basic method for adding components with GridBagLayout
+    private void addComponent(Component component, int row, int column, int width, int height) {
         constraints.gridx = column;
         constraints.gridy = row;
 
@@ -92,11 +94,13 @@ public class GUI extends JFrame {
         container.add(component);
     }
 
+    //EM: Main method to start the program
     public static void main(String args[]){
         GUI gui = new GUI();
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    //EM: Private inner class to handle button action
     private class ButtonHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -105,6 +109,7 @@ public class GUI extends JFrame {
             checkInput();
             fileInStr = fileIn.getText();
             fileOutStr = fileOut.getText();
+            //EM: Added separate method in order to get the test results and write to file.
             try {
                 doLogisticRegression();
             } catch (FileNotFoundException e1) {
@@ -150,6 +155,9 @@ public class GUI extends JFrame {
         }
     }
 
+    //EM
+    //This appeared to be the most reasonable solution to retrieve the predicted/actual values of
+    //the test set, display the accuracy for each individual test and to calculate the overall average.
     private void doLogisticRegression() throws FileNotFoundException, UnsupportedEncodingException {
         PrintWriter writer = new PrintWriter(fileOutStr, "UTF-8");
         double accuracy = 0.0;
@@ -166,6 +174,7 @@ public class GUI extends JFrame {
             writer.println(res);
         }
         Double overallAccuracy = accuracy/numTestsInt;
-        writer.println("\nOverall accuracy for " + numTestsInt + " tests: " + overallAccuracy);
+        writer.println("\nOverall accuracy for " + numTestsInt + " tests: " + overallAccuracy + "%");
+        writer.close();
     }
 }

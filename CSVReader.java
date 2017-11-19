@@ -23,8 +23,9 @@ public class CSVReader {
         this.percentage = percentage;
         this.fileLocation = fileLocation;
 
+        instances.clear();
         readCSVFile();
-        targetsize = (int)Math.round(instances.size()*percentage);
+        targetsize = (int) Math.round(instances.size() * percentage);
     }
 
     public static void readCSVFile() {
@@ -50,14 +51,16 @@ public class CSVReader {
                 instances.add(instance);
                 i++;
             }
+            br.close();
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null,"Invalid input: Invalid file read location.");
+            JOptionPane.showMessageDialog(null, "Invalid input: Invalid file read location.");
         }
 
         //EM
         //Shuffle the ArrayList
         Collections.shuffle(instances);
+
 
     }
 
@@ -86,7 +89,7 @@ public class CSVReader {
     //EM
     //Returns the labels in the dataset.
     public ArrayList<String> getLabels() {
-        ArrayList<String> labels =  new ArrayList<>();
+        ArrayList<String> labels = new ArrayList<>();
         labels.add(instances.get(0).getLabel());
         for (Instance instance : instances) {
             if (!(labels.contains(instance.getLabel()))) {

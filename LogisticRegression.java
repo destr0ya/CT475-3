@@ -1,6 +1,3 @@
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class LogisticRegression {
@@ -29,35 +26,35 @@ public class LogisticRegression {
     }
 
     //SOR: Method to implement sigmoid function
-    private double sigmoid(double logit){
+    private double sigmoid(double logit) {
         logit = 1.0 / (1.0 + Math.exp(-logit));
         return logit;
     }
 
     //SOR: Method to predict label
-    private double classify(double[] coeffs, Instance ins){
+    private double classify(double[] coeffs, Instance ins) {
         double logit = 0.0;
         double[] attribs = ins.getAttributes();
         logit += coeffs[0];
-        for(int i = 1; i <= numAttributes; i++){
+        for (int i = 1; i <= numAttributes; i++) {
             logit += coeffs[i] * attribs[i - 1];
         }
         return sigmoid(logit);
     }
 
     //SOR: train algorithm
-    public void train(){
+    public void train() {
 
         //SOR: fill array of coefficients with zeros
         coefficients = new double[labels.size()][numAttributes + 1];
 
         //SOR: iterate number of times specified for each label and each instance
         //run independent binary regressions
-        for (int lbl = 0; lbl < labels.size(); lbl++){
+        for (int lbl = 0; lbl < labels.size(); lbl++) {
             //SOR: variable to track convergence of coefficients
             double convergence = 1.0;
             //SOR: recalculate coefficients until number of iterations or certain level of convergence is reached
-            for (int iteration = 0; iteration < epochs; iteration++){
+            for (int iteration = 0; iteration < epochs; iteration++) {
                 if (Math.abs(convergence) > 0.00001) {
 
                     double[] deltaCoeff = new double[numAttributes + 1];
@@ -75,14 +72,14 @@ public class LogisticRegression {
                         //SOR: run gradient descent calculations
                         deltaCoeff[0] += yhat - binaryLabel;
                         for (int i = 1; i <= numAttributes; i++) {
-                            deltaCoeff[i] += (inst.getAttributes()[i-1]) * (yhat - binaryLabel);
+                            deltaCoeff[i] += (inst.getAttributes()[i - 1]) * (yhat - binaryLabel);
                         }
 
                     }
 
                     for (int j = 0; j < numAttributes + 1; j++) {
                         deltaCoeff[j] = deltaCoeff[j] / trainInstances.size();
-                        if (deltaCoeff[j] > convergence){
+                        if (deltaCoeff[j] > convergence) {
                             convergence = deltaCoeff[j];
                         }
                         coefficients[lbl][j] -= alpha * (deltaCoeff[j]);
@@ -112,14 +109,17 @@ public class LogisticRegression {
                 }
             }
 
+            //EM: Appends the instance and actual result to a long string to be fed to the
+            //Results object. This allows us to see the results in file.
             results += (inst.toString() + "\t\tPredicated Label: " + predLabel + "\r\n");
             if (inst.getLabel().equals(predLabel)) {
                 accuracy++;
             }
 
         }
+        //EM: computes the accuracy of the test and stores it as a double in the Results object
         accuracy = (accuracy / testInstances.size()) * 100;
-        results += ("Overall accuracy = " + accuracy + "%" + "\r\n\n");
+        results += ("Accuracy = " + accuracy + "%" + "\r\n\n");
         return new Results(results, accuracy);
     }
 }

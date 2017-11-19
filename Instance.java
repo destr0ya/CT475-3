@@ -4,7 +4,7 @@ public class Instance {
     public double[] attributes;
     public String label;
 
-    public Instance(double[] attrib, String lbl){
+    public Instance(double[] attrib, String lbl) {
         this.attributes = attrib; //SOR: set attributes of instance
         this.label = lbl; //SOR: set label
     }
