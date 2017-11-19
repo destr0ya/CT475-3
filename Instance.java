@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 //SOR: class to store data for specific instance
 public class Instance {
 
@@ -20,6 +18,7 @@ public class Instance {
     }
 
     //EM
+    //Simple toString() method used for testing.
     public String toString() {
         String returnString = "";
         for (int i = 0; i < attributes.length; i++) {

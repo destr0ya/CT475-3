@@ -5,14 +5,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 //EM
+//This class reads in a CSV file and creates an ArrayList of instances.
+//It also splits the data into training/testing based on a percentage given.
 public class CSVReader {
 
-    static ArrayList<Instance> instances = new ArrayList<>();
-    static double percentage;
-    int targetsize;
-    static int numAttributes;
-    static String fileLocation;
+    private static ArrayList<Instance> instances = new ArrayList<>();
+    private static double percentage;
+    private int targetsize;
+    private static int numAttributes;
+    private static String fileLocation;
 
+    //EM
+    //Constructor for CSV Reader. User must give a percentage to split the
+    //data, and the location of the CSV file.
     public CSVReader(double percentage, String fileLocation) {
         this.percentage = percentage;
         this.fileLocation = fileLocation;
@@ -26,8 +31,9 @@ public class CSVReader {
         String del = ",";
         int i = 0;
 
-        //Read in every line of the CSV file, assign the first four columns as the attributes,
-        //and the final column as the label.
+        //EM
+        //Read in every line of the CSV file, assign the first k-1 columns as attributes
+        //of the new Instance, and the final column k as the label.
         try (BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
             while ((line = br.readLine()) != null) {
                 Instance instance;
@@ -47,27 +53,36 @@ public class CSVReader {
             e.printStackTrace();
         }
 
-        //Shuffle the ArrayList, and separate into training and testing data
+        //EM
+        //Shuffle the ArrayList
         Collections.shuffle(instances);
 
     }
 
+    //EM
+    //Returns the training data, based on the percentage specified.
     public ArrayList<Instance> getTrainInstances() {
         ArrayList<Instance> training = new ArrayList<>();
         training.addAll(instances.subList(0, targetsize));
         return training;
     }
 
+    //EM
+    //Returns the testing data, based on the percentage specified.
     public ArrayList<Instance> getTestInstances() {
         ArrayList<Instance> testing = new ArrayList<>();
         testing.addAll(instances.subList(targetsize, instances.size()));
         return testing;
     }
 
+    //EM
+    //Returns the number of attributes of the item in question.
     public int getNumAttributes() {
         return numAttributes;
     }
 
+    //EM
+    //Returns the labels in the dataset.
     public ArrayList<String> getLabels() {
         ArrayList<String> labels =  new ArrayList<>();
         labels.add(instances.get(0).getLabel());
