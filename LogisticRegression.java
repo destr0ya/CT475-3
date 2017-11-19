@@ -30,7 +30,7 @@ public class LogisticRegression {
 
     //SOR: Method to implement sigmoid function
     private double sigmoid(double logit){
-        logit = 1.0 / (1.0 + Math.exp(logit));
+        logit = 1.0 / (1.0 + Math.exp(-logit));
         return logit;
     }
 
