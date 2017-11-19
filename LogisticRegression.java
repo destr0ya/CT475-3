@@ -55,7 +55,7 @@ public class LogisticRegression {
             double convergence = 1.0;
             //SOR: recalculate coefficients until number of iterations or certain level of convergence is reached
             for (int iteration = 0; iteration < epochs; iteration++) {
-                if (Math.abs(convergence) > 0.00001) {
+                if (Math.abs(convergence) > 1e-8) {
 
                     double[] deltaCoeff = new double[numAttributes + 1];
 
@@ -70,30 +70,35 @@ public class LogisticRegression {
                         double yhat = classify(coefficients[lbl], inst);
 
                         //SOR: run gradient descent calculations
-                        deltaCoeff[0] += yhat - binaryLabel;
+                        //Find change in coefficient needed to correctly classify each instance of training set
+                        deltaCoeff[0] += yhat - binaryLabel; //SOR: Change in intercept term
                         for (int i = 1; i <= numAttributes; i++) {
-                            deltaCoeff[i] += (inst.getAttributes()[i - 1]) * (yhat - binaryLabel);
+                            deltaCoeff[i] += (inst.getAttributes()[i - 1]) * (yhat - binaryLabel); //SOR: Change in attribute coefficients
                         }
 
                     }
 
+                    //SOR: Update coefficients with average change
                     for (int j = 0; j < numAttributes + 1; j++) {
-                        deltaCoeff[j] = deltaCoeff[j] / trainInstances.size();
+                        deltaCoeff[j] = deltaCoeff[j] / trainInstances.size(); //SOR: Calculate average
                         if (deltaCoeff[j] > convergence) {
-                            convergence = deltaCoeff[j];
+                            convergence = deltaCoeff[j]; //SOR: Determine least converged attribute to check if coefficients have converged adequately
                         }
-                        coefficients[lbl][j] -= alpha * (deltaCoeff[j]);
+                        coefficients[lbl][j] -= alpha * (deltaCoeff[j]); //SOR: update coefficients
                     }
                 }
             }
         }
     }
 
+    //SOR: Method to classify instances in test set
     public Results test() {
         String results = "";
         double accuracy = 0.0;
         for (Instance inst : testInstances) {
 
+            //SOR: Variable to track highest probability label
+            //Initialised at -1 to ensure yhat will be greater
             double max = -1.0;
             String predLabel = "";
             double yhat;
@@ -103,6 +108,7 @@ public class LogisticRegression {
                 //SOR: run classification for current label
                 yhat = classify(coefficients[lbl], inst);
 
+                //SOR: Set most likely label as predicted label
                 if (yhat > max) {
                     max = yhat;
                     predLabel = labels.get(lbl);

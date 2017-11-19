@@ -73,7 +73,7 @@ public class GUI extends JFrame {
 
         addComponent(start, 14, 4, 1, 1);
 
-        //Visualises the GUI and implements a handler for the button.
+        //EM: Visualises the GUI and implements a handler for the button.
         ButtonHandler handler = new ButtonHandler();
         start.addActionListener(handler);
 
@@ -114,6 +114,7 @@ public class GUI extends JFrame {
                 doLogisticRegression();
             } catch (FileNotFoundException e1) {
                 e1.printStackTrace();
+                JOptionPane.showMessageDialog(null,"Invalid input: Invalid file write location.");
             } catch (UnsupportedEncodingException e1) {
                 e1.printStackTrace();
             }

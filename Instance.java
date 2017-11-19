@@ -9,10 +9,12 @@ public class Instance {
         this.label = lbl; //SOR: set label
     }
 
+    //SOR: Return attributes of instance
     public double[] getAttributes() {
         return attributes;
     }
 
+    //SOR: Return instance label
     public String getLabel() {
         return label;
     }
