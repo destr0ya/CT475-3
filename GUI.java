@@ -138,16 +138,13 @@ public class GUI extends JFrame {
         }
         try{
             lrDouble = Double.parseDouble(learningRate.getText());
-            if (lrDouble > 1){
-                throw new Exception();
-            }
         } catch(Exception e){
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null,"Invalid input: Number of iterations must be a double less than 1.");
+            JOptionPane.showMessageDialog(null,"Invalid input: Learning rate must be a double.");
         }
         try{
             splitDouble = Double.parseDouble(percentageSplit.getText());
-            if (lrDouble > 1){
+            if (splitDouble > 1){
                 throw new Exception();
             }
         } catch(Exception e){
