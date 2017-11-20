@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 public class Test {
 
+    // EM
+    // Generic testing class for checking file read-in and parsing of instances.
     public static void main (String [] args) {
         CSVReader csv = new CSVReader(0.5, "/Users/Emma/Documents/Uni/Final Year/Machine Learning & Data Mining/Assignments/Assignment 3/owls15.csv");
         ArrayList<Instance> trainInstances = csv.getTrainInstances(); //SOR: instances for algorithm training

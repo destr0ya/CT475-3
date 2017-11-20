@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.rmi.server.ExportException;
 import java.util.ArrayList;
 
 public class GUI extends JFrame {
@@ -52,7 +53,7 @@ public class GUI extends JFrame {
         iterations = new JTextArea("100000");
         learningRate = new JTextArea("0.01");
         percentageSplit = new JTextArea("0.66");
-        fileOut = new JTextArea("/Users/Emma/Documents/Uni/Final Year/Machine Learning & Data Mining/Assignments/Assignment 3/owls.txt");
+        fileOut = new JTextArea("/Users/Emma/Desktop/owls.txt");
 
         JButton start = new JButton("Go!");
 
@@ -113,7 +114,6 @@ public class GUI extends JFrame {
             try {
                 doLogisticRegression();
             } catch (FileNotFoundException e1) {
-                e1.printStackTrace();
                 JOptionPane.showMessageDialog(null,"Invalid input: Invalid file write location.");
             } catch (UnsupportedEncodingException e1) {
                 e1.printStackTrace();
@@ -122,34 +122,40 @@ public class GUI extends JFrame {
     }
 
     //SOR: Error handling for GUI inputs
+    //EM: Added extra check for negative inputs
     private void checkInput() {
 
         try{
             numTestsInt = Integer.parseInt(numTests.getText());
-        } catch(Exception e){
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null,"Invalid input: Number of tests must be an integer.");
+            if (numTestsInt <= 0) {
+                throw new Exception();
+            }
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null,"Invalid input: Number of tests must be a positive integer.");
         }
         try{
             iterInt = Integer.parseInt(iterations.getText());
-        } catch(Exception e){
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null,"Invalid input: Number of iterations must be an integer.");
+            if (iterInt <= 0) {
+                throw new Exception();
+            }
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null,"Invalid input: Number of iterations must be a positive integer.");
         }
         try{
             lrDouble = Double.parseDouble(learningRate.getText());
-        } catch(Exception e){
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null,"Invalid input: Learning rate must be a double.");
+            if (lrDouble <= 0) {
+                throw new Exception();
+            }
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null,"Invalid input: Learning rate must be a positive double.");
         }
         try{
             splitDouble = Double.parseDouble(percentageSplit.getText());
-            if (splitDouble > 1){
+            if (splitDouble > 1 || splitDouble <= 0) {
                 throw new Exception();
             }
-        } catch(Exception e){
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null,"Invalid input: Percentage split must be a double less than 1.");
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null,"Invalid input: Percentage split must be a fraction between 0 and 1.");
         }
     }
 
