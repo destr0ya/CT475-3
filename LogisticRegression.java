@@ -117,7 +117,7 @@ public class LogisticRegression {
 
             //EM: Appends the instance and actual result to a long string to be fed to the
             //Results object. This allows us to see the results in file.
-            results += (inst.toString() + "\t\tPredicated Label: " + predLabel + "\r\n");
+            results += (inst.toString() + "\t\tPredicted Label: " + predLabel + "\r\n");
             if (inst.getLabel().equals(predLabel)) {
                 accuracy++;
             }
