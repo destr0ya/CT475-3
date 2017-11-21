@@ -32,6 +32,7 @@ public class CSVReader {
         String line = "";
         String del = ",";
         int i = 0;
+        ArrayList<String> strings = new ArrayList<>();
 
         //EM
         //Read in every line of the CSV file, assign the first k-1 columns as attributes
@@ -43,7 +44,21 @@ public class CSVReader {
                 numAttributes = row.length - 1;
                 double[] attributes = new double[numAttributes];
                 for (int j = 0; j < numAttributes; j++) {
-                    attributes[j] = Double.parseDouble(row[j]);
+                    //EM: This allows the CSV Reader to also work if one of the attributes is a String.
+                    //It simply assigns a double value which makes no difference to the program.
+                    try {
+                        attributes[j] = Double.parseDouble(row[j]);
+                    } catch (Exception e) {
+                        if (!strings.contains(row[j])) {
+                            strings.add(row[j]);
+                            attributes[j] = (double)strings.indexOf(row[j]);
+                        }
+                        else {
+                            for (String string : strings) {
+                                attributes[j] = (double)strings.indexOf(string);
+                            }
+                        }
+                    }
                 }
                 String label = row[row.length - 1];
 
