@@ -51,13 +51,8 @@ public class CSVReader {
                     } catch (Exception e) {
                         if (!strings.contains(row[j])) {
                             strings.add(row[j]);
-                            attributes[j] = (double)strings.indexOf(row[j]);
                         }
-                        else {
-                            for (String string : strings) {
-                                attributes[j] = (double)strings.indexOf(string);
-                            }
-                        }
+                        attributes[j] = (double)strings.indexOf(row[j]);
                     }
                 }
                 String label = row[row.length - 1];
