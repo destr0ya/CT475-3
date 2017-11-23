@@ -131,7 +131,7 @@ public class GUI extends JFrame {
                 throw new Exception();
             }
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null,"Invalid input: Number of tests must be a positive integer.");
+            JOptionPane.showMessageDialog(null,"Invalid input: Number of tests must be a non-zero positive integer.");
         }
         try{
             iterInt = Integer.parseInt(iterations.getText());
@@ -139,15 +139,15 @@ public class GUI extends JFrame {
                 throw new Exception();
             }
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null,"Invalid input: Number of iterations must be a positive integer.");
+            JOptionPane.showMessageDialog(null,"Invalid input: Number of iterations must be a non-zero positive integer.");
         }
         try{
             lrDouble = Double.parseDouble(learningRate.getText());
-            if (lrDouble <= 0) {
+            if (lrDouble > 1 || lrDouble <= 0) {
                 throw new Exception();
             }
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null,"Invalid input: Learning rate must be a positive double.");
+            JOptionPane.showMessageDialog(null,"Invalid input: Learning rate must be a positive double between 0 and 1.");
         }
         try{
             splitDouble = Double.parseDouble(percentageSplit.getText());
