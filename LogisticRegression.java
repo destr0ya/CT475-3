@@ -78,11 +78,13 @@ public class LogisticRegression {
 
                     }
 
+                    //SOR: Update convergence value
+                    convergence = Math.abs(deltaCoeff[0] / trainInstances.size());
                     //SOR: Update coefficients with average change
                     for (int j = 0; j < numAttributes + 1; j++) {
                         deltaCoeff[j] = deltaCoeff[j] / trainInstances.size(); //SOR: Calculate average
-                        if (deltaCoeff[j] > convergence) {
-                            convergence = deltaCoeff[j]; //SOR: Determine least converged attribute to check if coefficients have converged adequately
+                        if (Math.abs(deltaCoeff[j]) > convergence) {
+                            convergence = Math.abs(deltaCoeff[j]); //SOR: Determine least converged attribute to check if coefficients have converged adequately
                         }
                         coefficients[lbl][j] -= alpha * (deltaCoeff[j]); //SOR: update coefficients
                     }
