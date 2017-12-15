@@ -155,7 +155,7 @@ public class GUI extends JFrame {
                 throw new Exception();
             }
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null,"Invalid input: Percentage split must be a fraction between 0 and 1.");
+            JOptionPane.showMessageDialog(null,"Invalid input: Percentage split must be a positive double between 0 and 1.");
         }
     }
 

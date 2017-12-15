@@ -96,7 +96,7 @@ public class LogisticRegression {
     //SOR: Method to classify instances in test set
     public Results test() {
         String results = "";
-        double accuracy = 0.0;
+        double[][] confusionMatrix = new double[labels.size()][labels.size()];
         for (Instance inst : testInstances) {
 
             //SOR: Variable to track highest probability label
@@ -120,14 +120,32 @@ public class LogisticRegression {
             //EM: Appends the instance and actual result to a long string to be fed to the
             //Results object. This allows us to see the results in file.
             results += (inst.toString() + "\t\tPredicted Label: " + predLabel + "\r\n");
-            if (inst.getLabel().equals(predLabel)) {
-                accuracy++;
-            }
-
+            confusionMatrix[labels.indexOf(inst.getLabel())][labels.indexOf(predLabel)]++;
         }
+
         //EM: computes the accuracy of the test and stores it as a double in the Results object
+        double accuracy = 0.0;
+        for (int i = 0; i < labels.size(); i++) {
+            accuracy += confusionMatrix[i][i];
+        }
         accuracy = (accuracy / testInstances.size()) * 100;
         results += ("Accuracy = " + accuracy + "%" + "\r\n\n");
+        results += "\r\n";
+
+        //SOR: Print confusion matrix
+        results += ("True/Predicted");
+        for(int j = 0; j < labels.size(); j++){
+            results += ("\t\t" + labels.get(j));
+        }
+        results += ("\r\n");
+        for(int l = 0; l < labels.size(); l++){
+            results += (labels.get(l));
+            for(int j = 0; j<labels.size(); j++){
+                results += ("\t\t" + confusionMatrix[l][j]);
+            }
+            results += ("\r\n");
+        }
+
         return new Results(results, accuracy);
     }
 }
