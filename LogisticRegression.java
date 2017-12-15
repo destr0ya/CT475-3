@@ -132,7 +132,7 @@ public class LogisticRegression {
         results += ("Accuracy = " + accuracy + "%" + "\r\n\n");
         results += "\r\n";
 
-        //SOR: Print confusion matrix
+        //SOR: Add confusion matrix to results
         results += ("True/Predicted");
         for(int j = 0; j < labels.size(); j++){
             results += ("\t\t" + labels.get(j));
