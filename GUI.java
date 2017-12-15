@@ -171,8 +171,9 @@ public class GUI extends JFrame {
             LogisticRegression lr = new LogisticRegression(lrDouble, iterInt, csvReader, fileOutStr);
 
             lr.train();
-            resultsList.add(lr.test());
-            accuracy += lr.test().getAccuracy();
+            Results res = lr.test();
+            resultsList.add(res);
+            accuracy += res.getAccuracy();
         }
         for (Results res : resultsList) {
             writer.println(res);
